@@ -22,23 +22,23 @@ export default defineConfig({
         theme_color: "#000000",
         background_color: "#000000",
         display: "standalone",
-        start_url: "/",
-
+        start_url: "./",
+        scope: "./",
         icons: [
           {
-            src: "/favicon.svg",
+            src: "./pwa-icon.png",
             sizes: "192x192",
-            type: "image/svg+xml",
+            type: "image/png",
           },
           {
-            src: "/favicon.svg",
+            src: "./pwa-icon.png",
             sizes: "512x512",
-            type: "image/svg+xml",
+            type: "image/png",
           },
           {
-            src: "/favicon.svg",
+            src: "./pwa-icon.png",
             sizes: "512x512",
-            type: "image/svg+xml",
+            type: "image/png",
             purpose: "any maskable",
           },
         ],
