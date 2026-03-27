@@ -24,8 +24,8 @@ import { Orb } from "@/components/ui/orb";
 import { Waveform } from "@/components/ui/waveform";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app";
-import { useShallow } from "zustand/react/shallow";
 import type { ITrack } from "@/types";
+import { useShallow } from "zustand/react/shallow";
 
 const globalAudioState = {
   isPlaying: false,
@@ -80,9 +80,13 @@ const TimeDisplay = memo(() => {
 
 TimeDisplay.displayName = "TimeDisplay";
 
-const SpeakerContextBridge = ({ className }: { className?: string }) => {
-  const [tracks] = useAppStore(useShallow((state) => [state.tracks]));
-
+const SpeakerContextBridge = ({
+  className,
+  tracks,
+}: {
+  className?: string;
+  tracks: ITrack[];
+}) => {
   const player = useAudioPlayer();
   const playerRefStatic = useRef(player);
 
@@ -101,9 +105,17 @@ const SpeakerContextBridge = ({ className }: { className?: string }) => {
 };
 
 export function Speaker({ className }: { className?: string }) {
+  const [tracks] = useAppStore(useShallow((state) => [state.tracks]));
+
+  const hasTracks = tracks.length > 0;
+
+  if (!hasTracks) {
+    return null;
+  }
+
   return (
     <AudioPlayerProvider>
-      <SpeakerContextBridge className={className} />
+      <SpeakerContextBridge className={className} tracks={tracks} />
     </AudioPlayerProvider>
   );
 }

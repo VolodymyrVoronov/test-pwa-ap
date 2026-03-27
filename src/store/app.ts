@@ -17,13 +17,15 @@ const initialStoreState: IAppStoreState = {
 };
 
 export const useAppStore = create(
-  immer<IAppStoreState & IAppStoreActions>((set) => ({
+  immer<IAppStoreState & IAppStoreActions>((set, get) => ({
     ...initialStoreState,
 
     setTracks: (tracks) => {
       set(
         produce((draft) => {
-          draft.tracks = tracks;
+          const { tracks: oldTracks } = get();
+
+          draft.tracks = [...oldTracks, ...tracks];
         }),
       );
     },
